@@ -12,8 +12,3 @@ for linkable in $DIR/**/*.symlink; do
     ln -Ff -s $linkable $target
   fi
 done
-
-for executable in $DIR/**/install.sh; do
-  echo "👟 Running $executable."
-  sh $executable
-done
