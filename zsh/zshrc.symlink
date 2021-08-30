@@ -1,0 +1,73 @@
+setopt AUTO_CD
+setopt EXTENDED_HISTORY
+setopt APPEND_HISTORY
+setopt INC_APPEND_HISTORY
+setopt HIST_EXPIRE_DUPS_FIRST
+setopt HIST_FIND_NO_DUPS
+setopt HIST_VERIFY
+
+bindkey -e
+
+# Enable ctrl-r searching
+bindkey "^R" history-incremental-pattern-search-backward
+
+# history searching with up/down
+bindkey "^[[A" up-line-or-search
+bindkey "^[[B" down-line-or-search
+
+# unnecessary with bindkey -e
+#bindkey "^A" vi-beginning-of-line
+#bindkey "^E" vi-end-of-line
+
+# opt-delete word config
+autoload -U select-word-style select-word-style bash
+backward-kill-dir () {
+    local WORDCHARS=${WORDCHARS/\/}
+    zle backward-kill-word
+}
+zle -N backward-kill-dir
+bindkey '^[^?' backward-kill-dir
+#bindkey '^[^?' backward-kill-word
+
+# Large history
+SAVEHIST=10000000
+HISTSIZE=10000000
+HISTFILE=${ZDOTDIR:-$HOME}/.zsh_history
+
+# configure autocompletion
+
+# case insensitive path-completion
+zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*'
+
+# partial completion suggestions
+zstyle ':completion:*' list-suffixes
+zstyle ':completion:*' expand prefix suffix
+
+# load bashcompinit for some old bash completions
+autoload bashcompinit && bashcompinit
+
+# finally, enable autocompletion
+autoload -Uz compinit && compinit
+
+# git integration
+autoload -Uz vcs_info
+precmd_vcs_info() { vcs_info }
+precmd_functions+=( precmd_vcs_info )
+setopt prompt_subst
+zstyle ':vcs_info:git:*' check-for-changes true
+zstyle ':vcs_info:git:*' unstagedstr '+'
+zstyle ':vcs_info:git:*' stagedstr '.'
+
+zstyle ':vcs_info:git:*' formats '%F{118}[%b%u%c]%f '
+
+# Prompt config
+# export PROMPT='%(?.%F{118}✓.%F{red}✘%?)%f %n@%m:%F{33}%~%f ${vcs_info_msg_0_} %(!.#.=>) '
+export PROMPT='%(?.%F{118}✓.%F{red}✘%?)%f %F{33}%~%f ${vcs_info_msg_0_}%(!.#.=>) '
+
+# Aliases
+alias vi='vim'
+alias ll='ls -AGlFT'
+alias lh='ls -AGlFTh'
+alias llh='ls -AGlFTh'
+alias lt='ls -AGlFTtrh'
+alias gist='gist -p'
