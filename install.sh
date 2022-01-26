@@ -10,7 +10,7 @@ DIR="$(pwd -P $0)"
 
 if [ -n "$CODESPACES" ]; then
   echo '📦️ Installing a few packages…'
-  sh -c "$(curl -fsSL https://starship.rs/install.sh)"
+  sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- --yes
 fi
 
 # Link all linkable files
