@@ -8,6 +8,11 @@ set -x
 
 DIR="$(pwd -P $0)"
 
+if [ -n "$CODESPACES" ]; then
+  echo '📦️ Installing a few packages…'
+  sh -c "$(curl -fsSL https://starship.rs/install.sh)"
+fi
+
 # Link all linkable files
 for linkable in $DIR/**/*.symlink; do
   target=$HOME"/."$(basename $linkable | sed 's/.symlink//')
