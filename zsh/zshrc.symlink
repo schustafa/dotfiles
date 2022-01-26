@@ -49,21 +49,6 @@ autoload bashcompinit && bashcompinit
 # finally, enable autocompletion
 autoload -Uz compinit && compinit
 
-# git integration
-autoload -Uz vcs_info
-precmd_vcs_info() { vcs_info }
-precmd_functions+=( precmd_vcs_info )
-setopt prompt_subst
-zstyle ':vcs_info:git:*' check-for-changes true
-zstyle ':vcs_info:git:*' unstagedstr '+'
-zstyle ':vcs_info:git:*' stagedstr '.'
-
-zstyle ':vcs_info:git:*' formats '%F{118}[%b%u%c]%f '
-
-# Prompt config
-# export PROMPT='%(?.%F{118}✓.%F{red}✘%?)%f %n@%m:%F{33}%~%f ${vcs_info_msg_0_} %(!.#.=>) '
-export PROMPT='%(?.%F{118}✓.%F{red}✘%?)%f %F{33}%~%f ${vcs_info_msg_0_}%(!.#.=>) '
-
 # Aliases
 alias vi='vim'
 alias ll='ls -AGlFT'
@@ -71,3 +56,5 @@ alias lh='ls -AGlFTh'
 alias llh='ls -AGlFTh'
 alias lt='ls -AGlFTtrh'
 alias gist='gist -p'
+
+eval "$(starship init zsh)"
