@@ -34,20 +34,8 @@ SAVEHIST=10000000
 HISTSIZE=10000000
 HISTFILE=${ZDOTDIR:-$HOME}/.zsh_history
 
-# configure autocompletion
-
-# case insensitive path-completion
-zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*'
-
-# partial completion suggestions
-zstyle ':completion:*' list-suffixes
-zstyle ':completion:*' expand prefix suffix
-
-# load bashcompinit for some old bash completions
-autoload bashcompinit && bashcompinit
-
-# finally, enable autocompletion
-autoload -Uz compinit && compinit
+# Use fzf for autocompletion
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # Aliases
 alias vi='vim'

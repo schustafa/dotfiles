@@ -11,6 +11,7 @@ DIR="$(pwd -P $0)"
 if [ -n "$CODESPACES" ]; then
   echo '📦️ Installing a few packages…'
   sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- --yes
+  git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install --key-bindings --completion --no-update-rc
 fi
 
 # Link all linkable files
