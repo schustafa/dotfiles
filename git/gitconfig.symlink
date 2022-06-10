@@ -1,13 +1,13 @@
 [user]
-	name = AJ Schuster
-	email = schustafa@github.com
+  name = AJ Schuster
+  email = schustafa@github.com
 [push]
-	default = simple 
+  default = simple 
 [core]
   editor = vim
   whitespace = trailing-space,space-before-tab
   quotepath = false
-	trustctime = false
+  trustctime = false
 [apply]
   whitespace = fix
 [color]
@@ -26,7 +26,7 @@
   d  = diff
   dc = diff --cached
   v  = show
-	l = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset' --abbrev-commit
+  l = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset' --abbrev-commit
   ll = log
   cp = cherry-pick
   c  = checkout
@@ -35,7 +35,7 @@
   sh = !git-sh
 
 [init]
-	defaultBranch = main
+  defaultBranch = main
 [pull]
-	ff = only
-	rebase = false
+  ff = only
+  rebase = false
