@@ -15,7 +15,7 @@ if [ -n "$CODESPACES" ]; then
   sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- --yes
 
   # FZF
-  sudo apt-get install -y fzf
+  git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install --key-bindings --completion --no-update-rc
 
   echo '⚡ Setting default prompt to zsh'
   sudo chsh -s "$(which zsh)" "$(whoami)"
