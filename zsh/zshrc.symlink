@@ -35,9 +35,6 @@ SAVEHIST=10000000
 HISTSIZE=10000000
 HISTFILE=${ZDOTDIR:-$HOME}/.zsh_history
 
-# Use fzf for autocompletion
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
 # Aliases
 alias vi='vim'
 alias ll='ls -AGlFT'
