@@ -17,6 +17,9 @@ if [ -n "$CODESPACES" ]; then
   # FZF
   git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install --key-bindings --completion --no-update-rc
 
+  # gh-pairing-with
+  gh extensions install schustafa/gh-pairing-with
+
   echo '⚡ Setting default prompt to zsh'
   sudo chsh -s "$(which zsh)" "$(whoami)"
 fi
