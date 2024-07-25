@@ -36,7 +36,6 @@ HISTSIZE=10000000
 HISTFILE=${ZDOTDIR:-$HOME}/.zsh_history
 
 # Aliases
-alias vi='vim'
 alias ll='ls -AGlFT'
 alias lh='ls -AGlFTh'
 alias llh='ls -AGlFTh'
