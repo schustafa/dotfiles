@@ -1,13 +1,13 @@
 [user]
-	name = AJ Schuster
-	email = schustafa@github.com
+  name = AJ Schuster
+  email = schustafa@github.com
 [init]
-	defaultBranch = main
+  defaultBranch = main
 [core]
   editor = vim
   whitespace = trailing-space,space-before-tab
   quotepath = false
-	trustctime = false
+  trustctime = false
 [column]
   ui = auto
 [branch]
@@ -15,16 +15,16 @@
 [tag]
   sort = version:refname
 [pull]
-	ff = only
-	rebase = false
+  ff = only
+  rebase = false
 [push]
-	autoSetupRemote = true
+  autoSetupRemote = true
   default = simple
 [diff]
-    algorithm = histogram
-    colorMoved = plain
+  algorithm = histogram
+  colorMoved = plain
 [merge]
-    conflictstyle = diff3
+  conflictstyle = diff3
 [apply]
   whitespace = fix
 [color]
@@ -44,11 +44,15 @@
   d  = diff
   dc = diff --cached
   v  = show
-	l = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset' --abbrev-commit
+  l = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset' --abbrev-commit
   ll = log
   cp = cherry-pick
   c  = checkout
   cc = commit
   ri = rebase -i HEAD~10
   sh = !git-sh
+  main = !git symbolic-ref refs/remotes/origin/HEAD | cut -d'/' -f4
+  com = !"git checkout $(git main)"`
+  rom = !"git fetch; git rebase origin/$(git main)"
+
   ro = !git fetch origin && git reset --hard origin/master
