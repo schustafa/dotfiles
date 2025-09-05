@@ -35,6 +35,14 @@ SAVEHIST=10000000
 HISTSIZE=10000000
 HISTFILE=${ZDOTDIR:-$HOME}/.zsh_history
 
+# FZF
+## Initialize
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+## Configure
+export FZF_DEFAULT_COMMAND='rg --files --hidden -g ""'
+export FZF_DEFAULT_OPTS='--color=16'
+
 # Aliases
 alias ll='ls -AGlFT'
 alias lh='ls -AGlFTh'
