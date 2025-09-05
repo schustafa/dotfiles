@@ -11,6 +11,9 @@ DIR="$(pwd -P $0)"
 if [ -n "$CODESPACES" ]; then
   echo '📦️ Installing a few packages…'
 
+  # Some codespaces don't have vim?
+  sudo apt-get install --assume-yes vim
+
   # Starship Prompt
   sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- --yes
 
