@@ -35,3 +35,5 @@ for linkable in $DIR/**/*.symlink; do
     ln -Ff -s $linkable $target
   fi
 done
+
+touch $HOME/.dotfiles_ready

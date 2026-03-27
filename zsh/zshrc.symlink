@@ -1,3 +1,11 @@
+if [[ "$CODESPACES" == "true" ]] && [[ ! -f "$HOME/.dotfiles_ready" ]]; then
+     printf ":hourglass_flowing_sand: Dotfiles still installing"
+     while [[ ! -f "$HOME/.dotfiles_ready" ]]; do printf "."; sleep 1; done
+     echo ""
+     echo ":white_check_mark: Dotfiles ready!"
+     exec "$SHELL" -l   # re-exec so full config loads cleanly
+fi
+
 setopt AUTO_CD
 setopt EXTENDED_HISTORY
 setopt APPEND_HISTORY
