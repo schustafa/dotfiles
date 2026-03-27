@@ -45,7 +45,8 @@ HISTFILE=${ZDOTDIR:-$HOME}/.zsh_history
 
 # FZF
 ## Initialize
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+FZF_CTRL_T_OPTS="--preview 'cat {}'"
+source <(fzf --zsh)
 
 ## Configure
 export FZF_DEFAULT_COMMAND='rg --files --hidden -g ""'
