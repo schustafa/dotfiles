@@ -1,9 +1,18 @@
-if [[ "$CODESPACES" == "true" ]] && [[ ! -f "$HOME/.dotfiles_ready" ]]; then
-     printf ":hourglass_flowing_sand: Dotfiles still installing"
-     while [[ ! -f "$HOME/.dotfiles_ready" ]]; do printf "."; sleep 1; done
-     echo ""
-     echo ":white_check_mark: Dotfiles ready!"
-     exec "$SHELL" -l   # re-exec so full config loads cleanly
+if [[ "$CODESPACES" == "true" ]] && [[ ! -f "$HOME/.dotfiles_ready" || -f "$HOME/.dotfiles_failed" ]]; then
+    if [[ ! -f "$HOME/.dotfiles_failed" ]]; then
+        printf ":hourglass_flowing_sand: Dotfiles still installing"
+        while [[ ! -f "$HOME/.dotfiles_ready" && ! -f "$HOME/.dotfiles_failed" ]]; do
+            printf "."
+            sleep 1
+        done
+        echo ""
+    fi
+    if [[ -f "$HOME/.dotfiles_failed" ]]; then
+        print -u2 -- "Dotfiles installation failed; see $HOME/dotfiles_install.log."
+        return 1
+    fi
+    echo ":white_check_mark: Dotfiles ready!"
+    exec "$SHELL" -l
 fi
 
 setopt AUTO_CD
