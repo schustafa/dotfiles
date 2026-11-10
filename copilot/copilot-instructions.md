@@ -9,19 +9,31 @@ that materially changes the result, ask before proceeding.
 
 - My GitHub handle is `@schustafa`.
 - Optimize for correctness and completeness over speed.
-- Ask questions only when the ambiguity would materially change the result. Otherwise make a reasonable decision, proceed, and note it.
+- Ask clarifying questions only when the ambiguity would materially change the result. Otherwise make a reasonable decision, proceed, and note it. Required approvals still apply.
 - For substantial or risky changes, get an independent review or rubber-duck critique before finishing when that capability is available.
 - Use the best available GitHub tool in the current environment (prefer the `gh` CLI for issues, pull requests, and repository operations).
 - Do not edit these personal instruction files without my explicit permission.
 
+## Posting, commenting, and replying
+
+- Do not post comments, reviews, review replies, discussion messages, or messages in Slack, email, or other channels without my explicit approval for that specific message and destination.
+- Draft messages in this session and wait for approval before sending, unless I have already approved the exact text and destination. One approval covers one message, not follow-ups or replies.
+- Get explicit approval for each reaction, mention, assignment, review request, comment edit or deletion, or review-thread resolution or dismissal.
+- Reading is fine. Report findings, questions, and status updates in this session instead of posting them elsewhere.
+
 ## Scope and change discipline
 
-- Make the smallest complete change that fully solves the problem. Complete beats minimal, but avoid unrelated edits.
+- Choose a correct design, then make the smallest complete change that fully solves the problem. Complete beats minimal, but avoid unrelated edits.
 - Do exactly what was asked. Do not build things that are out of scope, and never stub or scaffold something in a way that pretends a feature exists when it does not.
 - Preserve existing behavior unless the requested change intentionally alters it.
-- Follow the repository's actual conventions over any external spec, design doc, or my own assumptions. Where a spec conflicts with how the code is really built, follow the code and tell me.
+- Among correct options, follow the repository's actual conventions over any external spec, design doc, or my own assumptions. Where these differ, follow the code and tell me. Explain any deviation needed for correctness rather than repeating a defect.
 - Fix bugs you directly cause or that are tightly coupled to your change. Do not fix unrelated pre-existing issues without asking.
 - Study the nearest precedent (a sibling package, module, or similar feature) before writing anything new, and match its layout and patterns.
+
+## Engineering decisions
+
+- Fix the root cause at the appropriate level rather than patching a symptom or adding a special case around a broken abstraction. If the proper fix materially expands the requested scope, explain it and ask before proceeding.
+- Ask before changing a public contract, changing a schema or adding a migration, executing writes to existing application data outside isolated tests, adding or replacing a dependency, or moving a security boundary, unless my request already explicitly authorizes that specific change.
 
 ## Code comments
 
@@ -50,7 +62,6 @@ that materially changes the result, ask before proceeding.
 
 ## Pull request descriptions
 
-- Be direct and concise. A pull request is not storytelling time. State what changed and why, then stop.
 - Cover what and why, briefly. Do not explain how, and do not restate the diff. Call out a design decision only when the code cannot show it.
 - Use plain language. Be technical where precision matters (real file, system, and behavior names), not for its own sake.
 - No conversational style, no narrating the path you took to the solution, and no filler such as "as discussed".
@@ -70,16 +81,22 @@ that materially changes the result, ask before proceeding.
 ## Testing and validation
 
 - Run the smallest targeted existing tests that cover the change first; expand to broader or full-suite runs only when a targeted run shows wider breakage.
+- Cover the failure mode you fixed with a regression test that fails without the fix, not only the happy path.
 - Run the targeted build, lint, and type-check for the code you touched. Do not run the full repository suite unless something tells you it is needed.
 - Only use the repository's existing test, lint, and build tooling. Do not introduce a new testing or linting tool.
 - Follow the structure of nearby tests and place new cases beside the closest related coverage.
 - Do not claim a change is complete without evidence that the requested result actually works.
 
+## Observability
+
+- For production code changes, assess whether existing logs, metrics, and spans are enough to detect and diagnose relevant failures. Add instrumentation only to close gaps, and explain in the report when no additions are needed.
+- Reuse the repository's existing logger, telemetry SDK, and error reporter.
+- Never put secrets, tokens, credentials, full request bodies, or personal data in telemetry. Keep metric labels bounded to avoid unbounded cardinality and cost.
+
 ## Ruby and Rails
 
 - When working in a Ruby or Rails repository, run Rubocop on the files you changed and resolve offenses before finishing.
-- Run the smallest set of specs or tests that cover the change rather than the whole suite.
-- Follow the repository's own style, structure, and generator conventions over general defaults.
+- Follow the repository's generator conventions.
 
 ## Writing and references
 
@@ -93,9 +110,13 @@ that materially changes the result, ask before proceeding.
 
 ## Reporting back
 
+- Lead with the conclusion or recommendation, then give supporting detail.
+- Support material technical claims with evidence, such as code references, measurements, or documented constraints.
+- When comparing options, recommend one and explain the tradeoffs rather than leaving an unranked menu.
+
 When you finish a task, report:
 
-- What changed, and confirmation that the targeted build, lint, type-check, and tests pass.
+- What changed, and the results of applicable build, lint, type-check, and tests. State which checks were not run or did not apply; never imply they passed.
 - Where the repository's conventions differed from any spec or my request, and what you followed instead.
 - Anything that turned out to be wrong, impossible, or already solved by existing code.
-- Any decision you made while unsure, one line each.
+- Any assumptions, unverified claims, or decisions made under uncertainty, stated beside the claims they affect rather than presented as verified facts.
