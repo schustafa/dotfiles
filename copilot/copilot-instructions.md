@@ -2,8 +2,9 @@
 
 These preferences apply across every repository and environment. Repository-specific
 instructions (`AGENTS.md`, `.github/copilot-instructions.md`, and similar) add local
-context and always win on project-specific matters. If instructions conflict in a way
-that materially changes the result, ask before proceeding.
+context and take precedence on project-specific conventions. They do not waive explicit
+approval requirements in this file. If other instructions conflict in a way that
+materially changes the result, ask before proceeding.
 
 ## Working with me
 
@@ -21,6 +22,12 @@ that materially changes the result, ask before proceeding.
 - Get explicit approval for each reaction, mention, assignment, review request, comment edit or deletion, or review-thread resolution or dismissal.
 - Reading is fine. Report findings, questions, and status updates in this session instead of posting them elsewhere.
 
+## GitHub CLI authentication
+
+- Before interpreting an unexpected 403 or 404 as a missing resource or lack of access, check `gh auth status --no-refresh` and the active credential source.
+- In Codespaces, an injected `GITHUB_TOKEN` may be scoped to one repository. `GH_TOKEN` takes precedence over `GITHUB_TOKEN`, and both override stored credentials.
+- Do not unset authentication variables, start a login flow, or otherwise change credentials without my explicit approval. Never print, log, or embed token values.
+
 ## Scope and change discipline
 
 - Choose a correct design, then make the smallest complete change that fully solves the problem. Complete beats minimal, but avoid unrelated edits.
@@ -35,10 +42,19 @@ that materially changes the result, ask before proceeding.
 - Fix the root cause at the appropriate level rather than patching a symptom or adding a special case around a broken abstraction. If the proper fix materially expands the requested scope, explain it and ask before proceeding.
 - Ask before changing a public contract, changing a schema or adding a migration, executing writes to existing application data outside isolated tests, adding or replacing a dependency, or moving a security boundary, unless my request already explicitly authorizes that specific change.
 
+## Data and schema design
+
+- For data and schema changes, identify required reads and writes, including filters, sorting, and pagination, before choosing a schema.
+- Enforce invariants that must hold under concurrency with database constraints where supported, rather than relying only on application checks.
+- Choose indexes from actual query patterns and the database's behavior. Use query plans or measurements to validate non-obvious choices.
+- Stage production migrations when needed to preserve compatibility and availability. Separate additive changes, backfills, switching reads and writes, and removal when deploying them together would be unsafe.
+
 ## Code comments
 
 - Prefer clear naming and structure. Add a comment only when something stays non-obvious after the code is as clear as the requested scope allows.
 - Inline comments explain why: a tradeoff, a workaround, a rejected alternative, an invariant or ordering requirement the types cannot express, or a surprising or dangerous consequence.
+- For a workaround comment, state the condition that allows the workaround to be removed.
+- Name symbols instead of using positional references such as "above", "below", or "the next block".
 - Do not restate what the code already says, and do not narrate it step by step ("Step 1", "Now loop over the users"). The one exception is an irreducibly dense regex, bit operation, or algorithm, where a short summary of what it does saves the reader real effort.
 - No storytelling. A comment is not the place to record how the solution was reached, what was tried first, or when something changed.
 - Use clear, concise, simple language, with no "I" or "we".
@@ -60,15 +76,18 @@ that materially changes the result, ask before proceeding.
 - Keep pull requests small and focused; prefer 100 or fewer changed lines and split larger
   work into stacked, targeted pull requests.
 
-## Pull request descriptions
+## Pull request titles and descriptions
 
+- Write titles in plain language that states what changes rather than the implementation mechanics.
 - Cover what and why, briefly. Do not explain how, and do not restate the diff. Call out a design decision only when the code cannot show it.
 - Use plain language. Be technical where precision matters (real file, system, and behavior names), not for its own sake.
 - No conversational style, no narrating the path you took to the solution, and no filler such as "as discussed".
-- Follow the repository's pull request template and title conventions when they exist, rather than substituting my own structure.
+- Follow the repository's pull request template and title conventions when they exist, rather than substituting my own structure. Aim for fewer than 200 words of body prose when practical, without omitting required template content or essential reviewer context.
+- Omit routine test counts and CI or lint output unless the repository template or a specific concern makes them relevant.
 - Link the related issue and summarize it. Never link alone.
+- Link relevant prior art, such as a preceding pull request in a stack or an implementation this mirrors, with a brief explanation of its relevance.
 - Keep the description in sync with the code if the change shifts during review.
-- For title rules, default structure, and the filing workflow, use the `github-pr-writing` skill.
+- When available, use the `write-pull-request` skill for additional title rules, default structure, and filing guidance.
 
 ## GitHub issues
 
@@ -76,7 +95,7 @@ that materially changes the result, ask before proceeding.
 - Describe what and why, not how. Do not prescribe specific implementation details; leave the approach to whomever picks up the issue.
 - No conversational phrases, jargon, em dashes, or lengthy elaboration.
 - Follow the repository's issue templates when they exist.
-- For a full structure and defaults, use the `github-issue-writing` skill.
+- When available, use the `write-github-issue` skill for additional structure and defaults.
 
 ## Testing and validation
 
@@ -95,12 +114,15 @@ that materially changes the result, ask before proceeding.
 
 ## Ruby and Rails
 
-- When working in a Ruby or Rails repository, run Rubocop on the files you changed and resolve offenses before finishing.
+- When changing Ruby code, run the repository's RuboCop command on the changed Ruby files and resolve offenses before finishing.
 - Follow the repository's generator conventions.
+- Prefer hash-value shorthand in call sites and hash literals when the repository targets Ruby 3.1 or later, its conventions and RuboCop configuration allow it, and the name in scope is the intended value, such as `user:` instead of `user: user`. Do not change method definitions or unrelated hashes just to use shorthand.
 
 ## Writing and references
 
-- Use simple, clear, friendly language.
+- Use simple, clear, friendly language. Prefer plain verbs and familiar domain terms in prose and new names, including symbols, branches, and telemetry.
+- Write test names as natural descriptions of behavior.
+- Apply naming preferences within repository conventions and API, framework, or standard requirements. Do not rename existing symbols solely to satisfy these style preferences.
 - Em dashes often signify broken sentence structure. Use commas, parentheses, or separate sentences instead.
 - Prefer GitHub-flavored Markdown.
 - Verify unfamiliar APIs, helpers, constants, and methods by searching the codebase before using them. Ask only if the answer stays unclear.
