@@ -73,8 +73,7 @@ materially changes the result, ask before proceeding.
 - Commit in logical steps rather than one large commit.
 - Do not open a pull request unless I ask. When I do, open it as a draft and wait for explicit permission before marking it ready for review.
 - Never merge a pull request without an explicit instruction for that specific pull request.
-- Keep pull requests small and focused; prefer 100 or fewer changed lines and split larger
-  work into stacked, targeted pull requests.
+- Keep pull requests focused on one reviewable change. Separate mechanical refactors from behavior changes. When work mixes independent concerns or is too large to review in one sitting, propose a stacked split before splitting.
 
 ## Pull request titles and descriptions
 
